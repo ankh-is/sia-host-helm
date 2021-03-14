@@ -1,6 +1,6 @@
 apiVersion: v2
 name: sia-host-helm
-version: 0.0.1
+version: 0.0.2
 appVersion: 1.5.5
 description: sia dedicated host server.
 keywords:
