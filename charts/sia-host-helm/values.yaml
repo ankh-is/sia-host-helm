@@ -1,0 +1,30 @@
+# sia image version
+# ref: https://github.com/NebulousLabs/docker-sia
+image: nebulouslabs/sia
+imageTag: latest
+
+service:
+  name: sia-host-helm
+
+replicaCount: 1
+
+# Configure resource requests and limits
+# ref: http://kubernetes.io/docs/user-guide/compute-resources/
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 500m
+
+siaServer:
+  serverPort: 9980
+  serviceType: LoadBalancer
+  siaDir: /data/sia/sia
+  siaDataDir: /data/sia/sia-data
+  siadDataDir: /data/sia/sia-data
+
+persistence:
+  config:
+    enabled: true
+    size: 50Gi
+    # storageClassName: -
+  claimName: "" # provide a value to prevent PVC creation

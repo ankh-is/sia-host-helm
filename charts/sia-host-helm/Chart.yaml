@@ -1,0 +1,13 @@
+apiVersion: v2
+name: sia-host-helm
+version: 0.0.1
+appVersion: 1.5.5
+description: sia dedicated host server.
+keywords:
+- sia
+- host
+- cryptocurrency
+home: https://sia.tech/
+icon: https://assets.coingecko.com/coins/images/289/small/siacoin.png?1548386465
+sources:
+- https://github.com/NebulousLabs/docker-sia

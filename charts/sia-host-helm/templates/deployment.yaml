@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "sia.fullname" . }}
+  labels:
+    app: {{ template "sia.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "sia.fullname" . }}
+      release: "{{ .Release.Name }}"
+  template:
+    metadata:
+      labels:
+        app: {{ template "sia.fullname" . }}
+        release: "{{ .Release.Name }}"
+    spec:
+      containers:
+      - name: {{ template "sia.fullname" . }}
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: Always
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+        env:
+        - name: SIA_DIR
+          value: {{ .Values.siaServer.siaDir | quote }}
+        - name: SIA_DATA_DIR
+          value: {{ .Values.siaServer.siaDataDir | quote }}
+        - name: SIAD_DATA_DIR
+          value: {{ .Values.siaServer.siadDataDir | quote }}
+
+        ports:
+        - name: sia-1
+          containerPort: {{ .Values.siaServer.serverPort | int }}
+          protocol: TCP
+        - name: sia-2
+          containerPort: {{ .Values.siaServer.serverPort | int | add 1 }}
+          protocol: TCP
+        - name: sia-3
+          containerPort: {{ .Values.siaServer.serverPort | int | add 2 }}
+          protocol: TCP
+        volumeMounts:
+        - name: sia-dir
+          mountPath: {{ .Values.siaServer.siaDir }}
+        - name: sia-data-dir
+          mountPath: {{ .Values.siaServer.siaDataDir }}
+        - name: siad-data-dir
+          mountPath: {{ .Values.siaServer.siadDataDir }}
+      volumes:
+      - name: sia-dir
+        persistentVolumeClaim:
+{{- if eq .Values.persistence.claimName "" }}
+          claimName: {{ template "sia.fullname" . }}
+{{- else }}
+          claimName: {{ .Values.persistence.claimName }}
+{{- end }}
+      - name: sia-data-dir
+        persistentVolumeClaim:
+{{- if eq .Values.persistence.claimName "" }}
+          claimName: {{ template "sia.fullname" . }}
+{{- else }}
+          claimName: {{ .Values.persistence.claimName }}
+{{- end }}
+      - name: siad-data-dir
+        persistentVolumeClaim:
+{{- if eq .Values.persistence.claimName "" }}
+          claimName: {{ template "sia.fullname" . }}
+{{- else }}
+          claimName: {{ .Values.persistence.claimName }}
+{{- end }}
+
+

@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "sia.fullname" . }}
+  labels:
+    app: {{ template "sia.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  type: {{ .Values.siaServer.serviceType }}
+  ports:
+  {{- if eq "LoadBalancer" .Values.siaServer.serviceType }}
+  - name: sia-1
+    port: {{ .Values.siaServer.serverPort | int }}
+    targetPort: sia-1
+    protocol: TCP
+  - name: sia-2
+    port: {{ .Values.siaServer.serverPort | int | add 1 }}
+    targetPort: sia-2
+    protocol: TCP
+  - name: sia-3
+    port: {{ .Values.siaServer.serverPort | int | add 2 }}
+    targetPort: sia-3
+    protocol: TCP
+  {{- else }}
+  - name: sia-1
+    port: {{ .Values.siaServer.serverPort | int }}
+    targetPort: sia-1
+    nodePort: {{ .Values.siaServer.serverPort | int }}
+    protocol: TCP
+  - name: sia-2
+    port: {{ .Values.siaServer.serverPort | int | add 1 }}
+    targetPort: sia-2
+    nodePort: {{ .Values.siaServer.serverPort | int | add 1 }}
+    protocol: TCP
+  - name: sia-3
+    port: {{ .Values.siaServer.serverPort | int | add 2 }}
+    targetPort: sia-3
+    nodePort: {{ .Values.siaServer.serverPort | int | add 2 }}
+    protocol: TCP
+  {{- end }}
+  selector:
+    app: {{ template "sia.fullname" . }}
