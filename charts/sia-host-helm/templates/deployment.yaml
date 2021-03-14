@@ -50,19 +50,6 @@ spec:
         volumeMounts:
         - name: data-dir
           mountPath: /data
-        - name: sia-dir
-          mountPath: {{ .Values.siaServer.siaDir }}
-        - name: sia-data-dir
-          mountPath: {{ .Values.siaServer.siaDataDir }}
-        - name: siad-data-dir
-          mountPath: {{ .Values.siaServer.siadDataDir }}
-      volumes:
-      - name: sia-dir
-        emptyDir: {}
-      - name: sia-data-dir
-        emptyDir: {}
-      - name: siad-data-dir
-        emptyDir: {}
   volumeClaimTemplates:
     - metadata:
         name: data-dir
