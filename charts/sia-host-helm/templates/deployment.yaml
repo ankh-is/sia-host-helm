@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ template "sia.fullname" . }}
   labels:
@@ -44,6 +44,8 @@ spec:
           containerPort: {{ .Values.siaServer.serverPort | int | add 2 }}
           protocol: TCP
         volumeMounts:
+        - name: data-dir
+          mountPath: /data
         - name: sia-dir
           mountPath: {{ .Values.siaServer.siaDir }}
         - name: sia-data-dir
@@ -52,8 +54,23 @@ spec:
           mountPath: {{ .Values.siaServer.siadDataDir }}
       volumes:
       - name: sia-dir
-        persistentVolumeClaim:
-{{- if eq .Values.persistence.claimName "" }}
+        emptyDir: {}
+      - name: sia-data-dir
+        emptyDir: {}
+      - name: siad-data-dir
+        emptyDir: {}
+  volumeClaimTemplates:
+    - metadata:
+        name: data-dir
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
+
+
+
+
           claimName: {{ template "sia.fullname" . }}
 {{- else }}
           claimName: {{ .Values.persistence.claimName }}
