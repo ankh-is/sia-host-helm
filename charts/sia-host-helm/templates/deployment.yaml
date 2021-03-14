@@ -18,6 +18,7 @@ spec:
       labels:
         app: {{ template "sia.fullname" . }}
         release: "{{ .Release.Name }}"
+    serviceName: {{ template "sia.fullname" . }}
     spec:
       containers:
       - name: {{ template "sia.fullname" . }}
