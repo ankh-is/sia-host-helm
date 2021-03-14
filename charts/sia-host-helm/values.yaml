@@ -20,7 +20,7 @@ siaServer:
   serviceType: LoadBalancer
   siaDir: /data/sia/sia
   siaDataDir: /data/sia/sia-data
-  siadDataDir: /data/sia/sia-data
+  siadDataDir: /data/sia/siad-data
 
 persistence:
   config:
