@@ -11,10 +11,6 @@ spec:
   type: {{ .Values.siaServer.serviceType }}
   ports:
   {{- if eq "LoadBalancer" .Values.siaServer.serviceType }}
-  - name: sia-1
-    port: {{ .Values.siaServer.serverPort | int }}
-    targetPort: sia-1
-    protocol: TCP
   - name: sia-2
     port: {{ .Values.siaServer.serverPort | int | add 1 }}
     targetPort: sia-2
@@ -23,12 +19,11 @@ spec:
     port: {{ .Values.siaServer.serverPort | int | add 2 }}
     targetPort: sia-3
     protocol: TCP
-  {{- else }}
-  - name: sia-1
-    port: {{ .Values.siaServer.serverPort | int }}
-    targetPort: sia-1
-    nodePort: {{ .Values.siaServer.serverPort | int }}
+  - name: sia-4
+    port: {{ .Values.siaServer.serverPort | int | add 3 }}
+    targetPort: sia-4
     protocol: TCP
+  {{- else }}
   - name: sia-2
     port: {{ .Values.siaServer.serverPort | int | add 1 }}
     targetPort: sia-2
@@ -38,6 +33,11 @@ spec:
     port: {{ .Values.siaServer.serverPort | int | add 2 }}
     targetPort: sia-3
     nodePort: {{ .Values.siaServer.serverPort | int | add 2 }}
+    protocol: TCP
+  - name: sia-4
+    port: {{ .Values.siaServer.serverPort | int | add 3 }}
+    targetPort: sia-4
+    nodePort: {{ .Values.siaServer.serverPort | int | add 3 }}
     protocol: TCP
   {{- end }}
   selector:

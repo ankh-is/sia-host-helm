@@ -44,6 +44,9 @@ spec:
         - name: sia-3
           containerPort: {{ .Values.siaServer.serverPort | int | add 2 }}
           protocol: TCP
+        - name: sia-4
+          containerPort: {{ .Values.siaServer.serverPort | int | add 3 }}
+          protocol: TCP
         volumeMounts:
         - name: data-dir
           mountPath: /data
