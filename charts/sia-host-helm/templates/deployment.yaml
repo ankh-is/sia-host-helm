@@ -67,27 +67,3 @@ spec:
         resources:
           requests:
             storage: 10Gi
-
-
-
-
-          claimName: {{ template "sia.fullname" . }}
-{{- else }}
-          claimName: {{ .Values.persistence.claimName }}
-{{- end }}
-      - name: sia-data-dir
-        persistentVolumeClaim:
-{{- if eq .Values.persistence.claimName "" }}
-          claimName: {{ template "sia.fullname" . }}
-{{- else }}
-          claimName: {{ .Values.persistence.claimName }}
-{{- end }}
-      - name: siad-data-dir
-        persistentVolumeClaim:
-{{- if eq .Values.persistence.claimName "" }}
-          claimName: {{ template "sia.fullname" . }}
-{{- else }}
-          claimName: {{ .Values.persistence.claimName }}
-{{- end }}
-
-
