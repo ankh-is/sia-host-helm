@@ -9,6 +9,7 @@ metadata:
     heritage: "{{ .Release.Service }}"
 spec:
   replicas: {{ .Values.replicaCount }}
+  serviceName: {{ template "sia.fullname" . }}
   selector:
     matchLabels:
       app: {{ template "sia.fullname" . }}
@@ -18,7 +19,6 @@ spec:
       labels:
         app: {{ template "sia.fullname" . }}
         release: "{{ .Release.Name }}"
-    serviceName: {{ template "sia.fullname" . }}
     spec:
       containers:
       - name: {{ template "sia.fullname" . }}
