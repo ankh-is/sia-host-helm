@@ -20,6 +20,10 @@ serviceAccount:
 service:
   name: sia-host-helm
 
+ingress:
+  enabled: true
+  annotations: {}
+
 # Configure resource requests and limits
 # ref: http://kubernetes.io/docs/user-guide/compute-resources/
 resources:
