@@ -19,11 +19,12 @@ spec:
       labels:
         app: {{ template "sia.fullname" . }}
         release: "{{ .Release.Name }}"
+        {{- include "sia.selectorLabels" . | nindent 8 }}
     spec:
       containers:
       - name: {{ template "sia.fullname" . }}
-        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-        imagePullPolicy: Always
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         env:
