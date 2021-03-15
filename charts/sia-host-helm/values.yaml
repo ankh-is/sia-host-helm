@@ -6,7 +6,7 @@ replicaCount: 1
 image:
   repository: nebulouslabs/sia
   tag: "latest"
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 serviceAccount:
   # Specifies whether a service account should be created
