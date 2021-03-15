@@ -4,8 +4,8 @@ replicaCount: 1
 # sia image version
 # ref: https://github.com/NebulousLabs/docker-sia
 image:
-  repository: nebulouslabs/sia
-  tag: "latest"
+  repository: 461720618128.dkr.ecr.us-east-2.amazonaws.com/ankh-is/sia-host-helm
+  tag: 0.0.11
   pullPolicy: Always
 
 serviceAccount:
