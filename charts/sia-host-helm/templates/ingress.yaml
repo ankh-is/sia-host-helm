@@ -23,7 +23,13 @@ spec:
       paths:
       - backend:
           serviceName: {{ .Values.service.name }}
-          servicePort: {{ .Values.service.edgePort }}
+          servicePort: {{ .Values.siaServer.serverPort | int | add 1 }}
+      - backend:
+          serviceName: {{ .Values.service.name }}
+          servicePort: {{ .Values.siaServer.serverPort | int | add 2 }}
+      - backend:
+          serviceName: {{ .Values.service.name }}
+          servicePort: {{ .Values.siaServer.serverPort | int | add 3 }}
 {{- if eq "NodePort" .Values.jxRequirements.ingress.serviceType }}
         path: "/"
 {{- else if .Values.jxRequirements.ingress.domain }}
