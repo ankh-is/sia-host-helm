@@ -1,12 +1,24 @@
+# Default values for sia-host
+replicaCount: 1
+
 # sia image version
 # ref: https://github.com/NebulousLabs/docker-sia
-image: nebulouslabs/sia
-imageTag: latest
+image:
+  repository: nebulouslabs/sia
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
 
 service:
   name: sia-host-helm
-
-replicaCount: 1
 
 # Configure resource requests and limits
 # ref: http://kubernetes.io/docs/user-guide/compute-resources/
@@ -28,3 +40,23 @@ persistence:
     size: 50Gi
     # storageClassName: -
   claimName: "" # provide a value to prevent PVC creation
+
+# values we use from the `jx-requirements.yml` file if we are using helmfile and helm 3
+jxRequirements:
+  ingress:
+    # shared ingress annotations on all services
+    annotations: {}
+    #  kubernetes.io/ingress.class: nginx
+
+    apiVersion: "networking.k8s.io/v1beta1"
+
+    # the domain for hosts
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: -jx.
+    serviceType: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+      secretName: ""
