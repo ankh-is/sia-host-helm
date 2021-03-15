@@ -26,20 +26,13 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "sia.labels" -}}
-helm.sh/chart: {{ include "sia.chart" . }}
 {{ include "sia.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
 Selector labels
 */}}
 {{- define "sia.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "sia.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
