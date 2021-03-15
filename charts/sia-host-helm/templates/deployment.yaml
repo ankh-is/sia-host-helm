@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: {{ template "sia.fullname" . }}
-        image: "{{ .Values.repository }}:{{ .Values.imageTag }}"
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: {{ .Values.pullPolicy }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
