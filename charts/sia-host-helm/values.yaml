@@ -3,10 +3,9 @@ replicaCount: 1
 
 # sia image version
 # ref: https://github.com/NebulousLabs/docker-sia
-image:
-  repository: nebulouslabs/sia
-  tag: "latest"
-  pullPolicy: Always
+image: nebulouslabs/sia
+imageTag: latest
+pullPolicy: Always
 
 serviceAccount:
   # Specifies whether a service account should be created

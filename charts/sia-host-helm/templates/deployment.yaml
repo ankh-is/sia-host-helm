@@ -23,8 +23,8 @@ spec:
     spec:
       containers:
       - name: {{ template "sia.fullname" . }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        image: "{{ .Values.repository }}:{{ .Values.imageTag }}"
+        imagePullPolicy: {{ .Values.pullPolicy }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
         env:
